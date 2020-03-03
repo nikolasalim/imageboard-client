@@ -9,7 +9,6 @@ class List extends React.Component {
       return <h1>Loading...</h1>;
     }
 
-    // HOW CAN I NOW REPEAT MYSELF HERE?
     if (!this.props.user) {
       return (
         <div>

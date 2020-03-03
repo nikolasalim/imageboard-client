@@ -52,6 +52,7 @@ export const createImage = data => (dispatch, getState) => {
 
 export const JWT = "JWT";
 function getJWT(payload) {
+  // console.log("payload in JWT up is", payload);
   return {
     type: JWT,
     payload
@@ -60,13 +61,13 @@ function getJWT(payload) {
 
 export const login = (email, password) => dispatch => {
   const data = { email: email, password: password };
+  // console.log("data in login is", data);
   request
     .post(`${baseUrl}/login`)
     .send(data)
     .then(response => {
-      // console.log("RESPONSE IS", response);
       const action = getJWT(response.body);
-      // console.log("action is", action);
+      // console.log("action in login func is", action);
       dispatch(action);
     })
     .catch(console.error);
@@ -74,7 +75,7 @@ export const login = (email, password) => dispatch => {
 
 export const SIGN_UP = "SIGN_UP";
 function newUser(payload) {
-  console.log("new user action running!");
+  // console.log("payload in sign up is", payload);
   return {
     type: SIGN_UP,
     payload
@@ -82,15 +83,14 @@ function newUser(payload) {
 }
 
 export const signup = (email, password) => dispatch => {
-  console.log("sign up func running!");
   const data = { email: email, password: password };
+  console.log("data in signup is", data);
   request
     .post(`${baseUrl}/user`)
     .send(data)
     .then(response => {
-      // console.log("RESPONSE IS", response);
       const action = newUser(response.body);
-      // console.log("action is", action);
+      console.log("action in signup is", action);
       dispatch(action);
     })
     .catch(console.error);
