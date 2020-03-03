@@ -72,4 +72,26 @@ export const login = (email, password) => dispatch => {
     .catch(console.error);
 };
 
-// login should dispatch the JWT from the /login responsebody inside an action with type JWT.
+export const SIGN_UP = "SIGN_UP";
+function newUser(payload) {
+  console.log("new user action running!");
+  return {
+    type: SIGN_UP,
+    payload
+  };
+}
+
+export const signup = (email, password) => dispatch => {
+  console.log("sign up func running!");
+  const data = { email: email, password: password };
+  request
+    .post(`${baseUrl}/user`)
+    .send(data)
+    .then(response => {
+      // console.log("RESPONSE IS", response);
+      const action = newUser(response.body);
+      // console.log("action is", action);
+      dispatch(action);
+    })
+    .catch(console.error);
+};

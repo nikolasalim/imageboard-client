@@ -1,6 +1,7 @@
 import React from "react";
 import CreateFormContainer from "../components/CreateFormContainer";
 import LoginFormContainer from "./LoginFormContainer";
+import SignupFormContainer from "./SignupFormContainer";
 
 class List extends React.Component {
   render() {
@@ -10,7 +11,12 @@ class List extends React.Component {
 
     // HOW CAN I NOW REPEAT MYSELF HERE?
     if (!this.props.user) {
-      return <LoginFormContainer user={this.props.user} />;
+      return (
+        <div>
+          <SignupFormContainer />
+          <LoginFormContainer user={this.props.user} />
+        </div>
+      );
     } else {
       return (
         <div>
