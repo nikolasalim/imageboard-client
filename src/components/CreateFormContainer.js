@@ -6,7 +6,8 @@ import CreateForm from "./CreateForm";
 class CreateFormContainer extends React.Component {
   state = {
     title: "",
-    url: ""
+    url: "",
+    userId: null
   };
 
   onChange = event => {
