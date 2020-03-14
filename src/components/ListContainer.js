@@ -1,5 +1,4 @@
 import React from "react";
-// import { getImages } from "../actions";
 import { getImages } from "../actions/actions";
 import { connect } from "react-redux";
 import List from "./List";

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { editImage } from "../actions/actions";
+import { editImage, deleteImage } from "../actions/actions";
 import EditForm from "./EditForm";
 
 class EditFormContainer extends React.Component {
@@ -13,16 +13,13 @@ class EditFormContainer extends React.Component {
   };
 
   clickHandler = () => {
-    // this.stage.displayingForm = !this.stage.displayingForm;
     this.setState({
       ...this.state,
       displayingForm: !this.state.displayingForm
     });
-    console.log("form displaying is now:", this.state.displayingForm);
   };
 
   onChange = event => {
-    console.log("this.state.updating is now:", this.state.updating);
     this.setState({
       ...this.state,
       updating: {
@@ -34,7 +31,7 @@ class EditFormContainer extends React.Component {
 
   onSubmit = event => {
     event.preventDefault();
-    console.log("this.state - beginning of submit:", this.state);
+
     this.props.editImage(this.state.updating, this.props.imageId);
     this.setState({
       ...this.state,
@@ -43,7 +40,21 @@ class EditFormContainer extends React.Component {
         url: ""
       }
     });
-    console.log("this.state - end of submit:", this.state);
+  };
+
+  onDelete = event => {
+    event.preventDefault();
+
+    const deletedImage = this.props.images.find(
+      image => image.id === this.props.imageId
+    );
+
+    this.props.deleteImage(deletedImage, this.props.imageId);
+    // const updatedImages = this.props.images.filter(
+    //   image => image.id !== this.props.imageId
+    // );
+    // console.log("updatedImages before:", updatedImages);
+    // console.log("this.props.images is:", this.props.images);
   };
 
   render() {
@@ -54,6 +65,7 @@ class EditFormContainer extends React.Component {
             onSubmit={this.onSubmit}
             onChange={this.onChange}
             values={this.state}
+            onDelete={this.onDelete}
           />
           <button onClick={this.clickHandler}>Hide form</button>
         </div>
@@ -61,60 +73,13 @@ class EditFormContainer extends React.Component {
     } else {
       return <button onClick={this.clickHandler}>Show form</button>;
     }
-    // return (
-    //   <EditForm
-    //     onSubmit={this.onSubmit}
-    //     onChange={this.onChange}
-    //     values={this.state}
-    //   />
-    // );
   }
 }
 
-// if (this.state.displayingForm) {
-//   return (
-//     <div>
-//       <EditFormContainer imageId={image.id} />
-//       <button onClick={this.clickHandler}>Hide form</button>
-//     </div>
-//   );
-// } else {
-//   return <button onClick={this.clickHandler}>Show form</button>;
-// }
+function mapStateToProps(state) {
+  return { images: state.images };
+}
 
-export default connect(null, { editImage })(EditFormContainer);
-
-// class EditFormContainer extends React.Component {
-//   state = {
-//     title: "",
-//     url: ""
-//   };
-
-//   onChange = event => {
-//     console.log("this.state is now:", this.state);
-//     this.setState({
-//       [event.target.name]: event.target.value
-//     });
-//   };
-
-//   onSubmit = event => {
-//     event.preventDefault();
-//     console.log("this.state - beginning of submit:", this.state);
-//     this.props.editImage(this.state, this.props.imageId);
-//     this.setState({
-//       title: "",
-//       url: ""
-//     });
-//     console.log("this.state - end of submit:", this.state);
-//   };
-
-//   render() {
-//     return (
-//       <EditForm
-//         onSubmit={this.onSubmit}
-//         onChange={this.onChange}
-//         values={this.state}
-//       />
-//     );
-//   }
-// }
+export default connect(mapStateToProps, { editImage, deleteImage })(
+  EditFormContainer
+);

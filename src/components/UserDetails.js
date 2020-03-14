@@ -39,17 +39,6 @@ class UserDetails extends React.Component {
   }
 }
 
-// if (this.state.displayingForm) {
-//   return (
-//     <div>
-//       <EditFormContainer imageId={image.id} />
-//       <button onClick={this.clickHandler}>Hide form</button>
-//     </div>
-//   );
-// } else {
-//   return <button onClick={this.clickHandler}>Show form</button>;
-// }
-
 function mapStateToProps(state) {
   return { images: state.images, user: state.user, usersList: state.usersList };
 }

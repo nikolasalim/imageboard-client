@@ -23,14 +23,3 @@ class App extends Component {
 }
 
 export default App;
-
-{
-  /* <NavBar />
-        <Switch>
-          <Route exact path="/checkout" component={Cart} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/search" component={Search} />
-          <Route path="/" component={MainStore} />
-        </Switch>
-        <Footer /> */
-}

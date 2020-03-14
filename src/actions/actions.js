@@ -72,6 +72,28 @@ export const editImage = (data, id) => (dispatch, getState) => {
     .catch(console.error);
 };
 
+// Deleting an specific image from que database
+
+export const DELETE_IMAGE = "DELETE_IMAGE";
+function deletingImage(payload) {
+  return {
+    type: DELETE_IMAGE,
+    payload
+  };
+}
+
+export const deleteImage = (deletedImage, id) => (dispatch, getState) => {
+  request
+    .delete(`${baseUrl}/image/${id}`)
+    .send(deletedImage)
+    .then(response => {
+      const action = deletingImage(response.body);
+      console.log("response body in action is:", response.body);
+      dispatch(action);
+    })
+    .catch(console.error);
+};
+
 // Sending a JWT
 
 export const JWT = "JWT";
@@ -146,11 +168,11 @@ function userImages(payload) {
 }
 
 export const getUserImages = id => (dispatch, getState) => {
-  const state = getState();
-  console.log("jwt is", state.user.jwt);
-  const { jwt } = state.user;
+  // const state = getState();
+  // console.log("jwt is", state.user.jwt);
+  // const { jwt } = state.user;
 
-  request(`${baseUrl}/user/${id}`)
+  request(`${baseUrl}/image/${id}`)
     .then(response => {
       const action = userImages(response.body);
       dispatch(action);
