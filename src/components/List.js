@@ -4,6 +4,7 @@ import LoginFormContainer from "./LoginFormContainer";
 import SignupFormContainer from "./SignupFormContainer";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import CommentContainer from "./CommentContainer";
 
 class List extends React.Component {
   averageTime = () => {
@@ -22,12 +23,12 @@ class List extends React.Component {
       return `${moment(i.createdAt).diff(
         moment(this.averageTime()),
         "hours"
-      )} hour(s) older than average.`;
+      )} hour(s) more recent than average.`;
     } else {
       return `${moment(this.averageTime()).diff(
         moment(i.createdAt),
         "hours"
-      )} hour(s) more recent than average.`;
+      )} hour(s) older than average.`;
     }
   };
 
@@ -59,6 +60,7 @@ class List extends React.Component {
                   .fromNow()}
               </div>
               <p>{this.gettingTimeDifference(image)}</p>
+              <CommentContainer imageId={image.id} />
             </div>
           ))}
         </div>
@@ -70,17 +72,3 @@ class List extends React.Component {
 export default List;
 
 // https://www.youtube.com/watch?v=-sjbZXdGB6M
-
-{
-  /* <p>in millisec: {moment(image.createdAt).valueOf()}</p> */
-  {
-    /* result? {moment(image.createdAt).valueOf() - this.averageTime()} */
-  }
-}
-{
-  /* <p>time posted: {moment(image.createdAt).format("LLLL")}</p>
-              <p>average: {this.averageTime()}</p> */
-}
-{
-  /* {moment([2007, 0, 29]).diff(moment([2007, 0, 28]), "hours")} */
-}

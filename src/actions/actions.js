@@ -1,8 +1,8 @@
 import request from "superagent";
 
 export const ALL_IMAGES = "ALL_IMAGES";
-const baseUrl = "http://localhost:4000";
-// const baseUrl = "https://pacific-beach-63955.herokuapp.com";
+// const baseUrl = "http://localhost:4000";
+const baseUrl = "https://pacific-beach-63955.herokuapp.com";
 
 function allImages(payload) {
   return {
@@ -167,14 +167,62 @@ function userImages(payload) {
   };
 }
 
-export const getUserImages = id => (dispatch, getState) => {
+export const getUserImages = userId => (dispatch, getState) => {
   // const state = getState();
   // console.log("jwt is", state.user.jwt);
   // const { jwt } = state.user;
 
-  request(`${baseUrl}/image/${id}`)
+  request(`${baseUrl}/image/${userId}`)
     .then(response => {
       const action = userImages(response.body);
+      dispatch(action);
+    })
+    .catch(console.error);
+};
+
+// Creating a new comment
+
+export const NEW_COMMENT = "NEW_COMMENT";
+
+function newComment(payload) {
+  return {
+    type: NEW_COMMENT,
+    payload
+  };
+}
+
+export const createComment = (comment, imageId) => (dispatch, getState) => {
+  const state = getState();
+  const { user } = state;
+
+  const data = { comment: comment, imageId: imageId };
+
+  request
+    .post(`${baseUrl}/comment`)
+    .set("Authorization", `Bearer ${user.jwt}`)
+    .send(data)
+    .then(response => {
+      const action = newComment(response.body);
+      dispatch(action);
+    })
+    .catch(console.error);
+};
+
+// Reading all comments
+
+export const GET_COMMENTS = "GET_COMMENTS";
+
+function gettingComments(payload) {
+  return {
+    type: GET_COMMENTS,
+    payload
+  };
+}
+
+export const getComments = () => (dispatch, getState) => {
+  request(`${baseUrl}/comment`)
+    .then(response => {
+      const action = gettingComments(response.body);
       dispatch(action);
     })
     .catch(console.error);
